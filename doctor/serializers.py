@@ -1,9 +1,9 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Category
+from .models import CustomerCategory
 
 class CategorySerializer(ModelSerializer):
     class Meta:
-        model = Category
+        model = CustomerCategory
         fields = "__all__"
     
 
