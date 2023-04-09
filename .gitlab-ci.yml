@@ -1,0 +1,40 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH != "master" && $CI_PIPELINE_SOURCE != "merge_request_event"
+      when: never
+    - when: always
+stages:
+  - build
+  - deploy
+
+
+
+clone_project:
+  tags:
+    - shell
+  only:
+    - master
+  stage: build 
+  before_script:
+    - echo $(whoami)
+    - cd /root/code/serverprojects/
+    # - git remote set-url origin ssh://git@gith.ir:1010/nobody/learningwebsite.git
+
+  script:
+    - rm -rf jilizv3
+    - git clone ssh://git@gith.ir:1010/omidespargham/jilizv3.git
+    
+update_project:
+  tags:
+    - shell
+  only:
+    - master
+  stage: deploy
+  needs:
+    - clone_project
+
+  script:
+    - cd /root/code/serverprojects
+    - docker compose up jiliz --build -d 
+    
+

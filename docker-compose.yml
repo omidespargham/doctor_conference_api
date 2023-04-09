@@ -1,0 +1,21 @@
+version: "3.9"
+
+
+services:
+
+  jiliz:
+    container_name: test_api
+    build:
+      context: .
+
+    ports:
+      - "4030:4030"
+    command: gunicorn docter_conference.wsgi:application --bind learningwebsite:4050
+
+    networks:
+      - shared
+
+networks:
+  shared:
+    external: true
+
