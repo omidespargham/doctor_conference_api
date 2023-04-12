@@ -1,9 +1,8 @@
 from django.contrib import admin
-from .models import CustomerCategory,City,Doctor,DoctorCategory
+from .models import Category,City,Doctor
 
 
-admin.site.register(CustomerCategory)
-admin.site.register(DoctorCategory)
+admin.site.register(Category)
 admin.site.register(Doctor)
 admin.site.register(City)
 

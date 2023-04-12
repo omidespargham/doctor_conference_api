@@ -2,20 +2,29 @@ from django.db import models
 
 
 
-class CustomerCategory(models.Model):
+
+
+class Category(models.Model):
     name = models.CharField(max_length=255,unique=True)
+    parent = models.ForeignKey("Category",on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self):
         return f"{self.name}"
 
+# class CustomerCategory(models.Model):
+#     name = models.CharField(max_length=255,unique=True)
 
-class DoctorCategory(models.Model):
-    name = models.CharField(max_length=255,unique=True)
-    parent = models.ForeignKey("DoctorCategory",on_delete=models.CASCADE,null=True,blank=True)
-    customer_category = models.ForeignKey("CustomerCategory",on_delete=models.SET_NULL,null=True)
+#     def __str__(self):
+#         return f"{self.name}"
 
-    def __str__(self):
-        return f"{self.name}"
+
+# class DoctorCategory(models.Model):
+#     name = models.CharField(max_length=255,unique=True)
+
+#     customer_category = models.ForeignKey("CustomerCategory",on_delete=models.SET_NULL,null=True)
+
+#     def __str__(self):
+#         return f"{self.name}"
     
 
 class City(models.Model):
@@ -30,7 +39,7 @@ class Doctor(models.Model):
     doctor_medical_code = models.CharField(max_length=8)
     national_code = models.CharField(max_length=15)
     city = models.ForeignKey("City",on_delete=models.SET_NULL,null=True)
-    doctor_category = models.ManyToManyField("DoctorCategory")
+    doctor_category = models.ManyToManyField("Category")
 
     def __str__(self):
         return f"{self.name}"
