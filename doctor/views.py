@@ -4,11 +4,6 @@ from rest_framework.response import Response
 from .models import Category
 from .serializers import CategorySerializer
 
-
-
-class FirstApi(APIView):
-    def get(self,request):
-        return Response({"this is make by avatar !"})
     
 
 class GetMainCategorysView(APIView):
