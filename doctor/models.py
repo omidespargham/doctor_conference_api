@@ -1,15 +1,15 @@
 from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey,TreeManyToManyField
 
 
 
 
-
-class Category(models.Model):
+class Category(MPTTModel):
     name = models.CharField(max_length=255,unique=True)
-    parent = models.ForeignKey("Category",on_delete=models.CASCADE,null=True,blank=True)
+    parent = TreeForeignKey("Category",on_delete=models.CASCADE,null=True,blank=True,related_name='children')
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
 
 # class CustomerCategory(models.Model):
 #     name = models.CharField(max_length=255,unique=True)
@@ -39,7 +39,7 @@ class Doctor(models.Model):
     doctor_medical_code = models.CharField(max_length=8)
     national_code = models.CharField(max_length=15)
     city = models.ForeignKey("City",on_delete=models.SET_NULL,null=True)
-    doctor_category = models.ManyToManyField("Category")
+    doctor_category = TreeManyToManyField("Category",related_name="doctors")
 
     def __str__(self):
         return f"{self.name}"
